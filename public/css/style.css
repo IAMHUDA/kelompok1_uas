@@ -1,0 +1,290 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: 'Ga Maamli';
+    src: url('/fonts/GaMaamli-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Yuji Mai';
+    src: url('/fonts/YujiMai-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ChakraPetch';
+    src: url('/fonts/ChakraPetch-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  .font-chakra {
+    font-family: 'ChakraPetch', sans-serif;
+  }
+  
+
+/* Terapkan Font Default */
+body {
+    font-family: 'Ga Maamli', Arial, sans-serif;
+}
+
+/* Khusus untuk Heading Menggunakan Yuji Mai */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Yuji Mai', serif;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+h1.todo{
+    font-size: 36px;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container,.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.doodle-section {
+    background-color: #ffffff;
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.doodle-img {
+    width: 80%;
+    max-width: 400px;
+}
+
+.form-section {
+    background: #fff;
+    border-radius: 0 8px 8px 0;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+   
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #007bff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.text-center a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .doodle-section {
+        display: none;
+    }
+
+    .form-section {
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.card {
+    width: 500px; 
+    height: 200px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 15px;
+    background-color: red;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    position: relative;
+    cursor: pointer;
+    font-weight: 900;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    background: linear-gradient(0deg, #000, #272727);
+}
+
+.card:hover {
+    transform: scale(1.05); /* Scale up slightly on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.card:before, .card:after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094, 
+          #0000ff, #00ff00, #ffff00, #ff0000);
+    background-size: 400%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: -1;
+    animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.card:after {
+    filter: blur(100px);
+}
+
+
+/* navbar */
+.custom-signout {
+    color: #dc3545; /* Ubah warna teks menjadi merah */
+    font-weight: bold; /* Gaya teks tebal */
+    display: flex; /* Memastikan elemen berada dalam baris yang sama */
+    align-items: center; /* Vertikal center icon dan text */
+}
+
+.custom-signout:hover {
+    color: #c82333; /* Ubah warna saat hover */
+    text-decoration: underline; /* Tambahkan garis bawah saat hover */
+}
+.custom-navbar {
+    background-color: white; /* Warna latar belakang navbar */
+    padding: 10px 20px; /* Padding atas/bawah 10px, kiri/kanan 20px */
+    position: sticky; /* Menempel pada posisi atas */
+    top: 0; /* Posisi atas */
+    z-index: 1000; /* Pastikan navbar di atas konten lainnya */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bayangan untuk efek kedalaman */
+}
+
+.custom-nav-link {
+    color: black; /* Warna teks link navbar */
+    font-family: 'Ga Maamli', sans-serif; /* Ganti dengan font yang diinginkan */
+    font-weight: normal; /* Gaya teks normal */
+    font-size: 24px; /* Ukuran font link navbar */
+}
+
+.custom-nav-link:hover {
+    color: red; /* Ubah warna saat hover */
+    font-weight: bold; /* Gaya teks tebal saat hover */
+}
+
+.custom-signout {
+    color: black; /* Warna teks tombol signout */
+    font-family: 'Ga Maamli', sans-serif; /* Ganti dengan font yang diinginkan */
+    font-weight: normal; /* Gaya teks normal */
+    font-size: 18px; /* Ukuran font tombol signout */
+}
+
+.custom-signout:hover {
+    color: red; /* Ubah warna saat hover */
+    font-weight: bold; /* Gaya teks tebal saat hover */
+}
+
+.cardd-profile {
+    background-color: #f9fafb; /* Warna latar belakang yang lembut */
+    padding: 2rem; /* Tambahkan padding di sekitar section */
+}
+
+.cardd-profile img {
+    border-radius: 50%; /* Membuat gambar profil berbentuk bulat */
+}
+
+.cardd-profile h3 {
+    font-size: 1.25rem; /* Ukuran font untuk nama */
+}
+
+.cardd-profile p {
+    margin-top: 0.5rem; /* Jarak antara elemen */
+}
+
+
+.todo-cardd {
+    transition: transform 0.2s;
+    height: 200px; /* Set the height to match your design */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    padding: 20px; /* Add padding for better spacing */
+    text-align: center; /* Center text */
+    border: 1px solid #ddd; /* Add border for definition */
+    background-color: #f8f9fa; /* Light background color */
+}
+
+.cardd-title {
+    font-size: 1.5rem; /* Adjust title size */
+    margin-bottom: 10px; /* Add space below title */
+}
+
+.cardd-text {
+    font-size: 12px; /* Adjust text size */
+    margin-bottom: 20px; /* Add space below text */
+}
+
+.btn {
+    width: 120px; /* Set button width for uniformity */
+}
+
+

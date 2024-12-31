@@ -1,0 +1,21 @@
+<div class="login-container">
+    <div class="row">
+        <!-- Bagian Form -->
+        <div class="col-md-12 form-section">
+            <h1 class="text-center mb-4" style="font-size: 26px;">Login atau Buat Akun</h1>
+            <p class="text-center mb-4">Silakan masuk atau buat akun untuk mengakses produk dan keranjang.</p>
+            <form action="/login" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <p class="mt-3 text-center">Belum punya akun? <a href="/signup">Daftar di sini</a>.</p>
+        </div>
+    </div>
+</div>
