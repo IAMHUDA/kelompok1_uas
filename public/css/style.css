@@ -16,6 +16,13 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'ubuntu';
+    src: url('/fonts/Ubuntu-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 @font-face {
     font-family: 'ChakraPetch';
     src: url('/fonts/ChakraPetch-SemiBold.ttf') format('truetype');
@@ -34,11 +41,6 @@ body {
 }
 
 /* Khusus untuk Heading Menggunakan Yuji Mai */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Yuji Mai', serif;
-    font-weight: normal;
-    font-size: 24px;
-}
 
 h1.todo{
     font-size: 36px;
