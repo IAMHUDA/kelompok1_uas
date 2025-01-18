@@ -26,12 +26,14 @@ async function authenticateUser(username, password) {
     const query = 'SELECT * FROM users WHERE username = ?';
     const [rows] = await db.query(query, [username]);
 
+    console.log('Query Result:', rows); // Debug hasil query
+
     if (rows.length === 0) {
         throw new Error('User not found');
     }
 
     const user = rows[0];
-    const isPasswordValid = await bcrypt.compare(password, user.password); // Membandingkan hash password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
         throw new Error('Invalid password');
@@ -40,23 +42,34 @@ async function authenticateUser(username, password) {
     return user;
 }
 
+
 // Route Signup
 router.post('/signup', (req, res) => {
     const { username, password, role = 'user' } = req.body;
 
     bcrypt.hash(password, 10, (err, hash) => {
-        if (err) return res.status(500).send('Error hashing password');
+        if (err) {
+            console.error('Error hashing password:', err);
+            return res.status(500).send('Error hashing password');
+        }res.redirect('/login');
 
         db.query(
             'INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
             [username, hash, role],
             (err, result) => {
-                if (err) return res.status(500).send('Error registering user');
-                res.redirect('/login');
+                if (err) {
+                    console.error('Error registering user:', err);
+                    return res.status(500).send('Error registering user');
+                }
+
+                console.log('User registered successfully:', result);
+                 // Redirect ke halaman login setelah berhasil signup
             }
         );
     });
 });
+
+
 
 // Route untuk menampilkan form signup
 router.get('/signup', (req, res) => {

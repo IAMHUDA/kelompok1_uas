@@ -1,119 +1,90 @@
-
 <section class="pt-24 pb-10 bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4">
-      <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Dashboard Produk</h1>
-  
-      <!-- Form Tambah Produk -->
-      <div class="bg-white shadow-md rounded-lg p-6 mb-10">
-        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Tambah Produk</h2>
-        <form action="/dashboard/create" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <input 
-            type="text" 
-            name="name" 
-            placeholder="Nama Produk" 
-            class="border border-gray-300 rounded-lg p-2 w-full" 
-            required                                                        
-          />
-          <input 
-            type="file" 
-            name="image" 
-            accept="image/*" 
-            class="border border-gray-300 rounded-lg p-2 w-full" 
-            required 
-          />
-          <input 
-            type="text" 
-            name="category" 
-            placeholder="Kategori" 
-            class="border border-gray-300 rounded-lg p-2 w-full" 
-            required 
-          />
-          <input 
-            type="number" 
-            name="price" 
-            placeholder="Harga" 
-            class="border border-gray-300 rounded-lg p-2 w-full" 
-            required 
-          />
-          <div class="col-span-full text-right">
-            <button 
-              type="submit" 
-              class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg"
-            >
-              Tambah
-            </button>
-          </div>
-        </form>
-      </div>
-  
-      <!-- Tabel Produk -->
-<div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-2xl font-semibold mb-4 text-gray-700">Daftar Produk</h2>
-    <table class="table-auto w-full border-collapse border border-gray-200">
-        <thead>
-            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <th class="py-3 px-6 text-left">ID</th>
-                <th class="py-3 px-6 text-left">Nama</th>
-                <th class="py-3 px-6 text-left">Gambar</th>
-                <th class="py-3 px-6 text-left">Kategori</th>
-                <th class="py-3 px-6 text-left">Harga</th>
-                <th class="py-3 px-6 text-center">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="text-gray-700 text-sm font-light">
-            <% products.forEach(product => { %>
-            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                <td class="py-3 px-6 text-left"><%= product.id %></td>
-                <td class="py-3 px-6 text-left"><%= product.name %></td>
-                <td class="py-3 px-6 text-left">
-                    <img 
-                        src="/uploads/<%= product.image %>" 
-                        alt="<%= product.name %>" 
-                        class="h-16 w-16 object-cover rounded-lg"
-                    />
-                </td>
-                <td class="py-3 px-6 text-left"><%= product.category %></td>
-                <td class="py-3 px-6 text-left">Rp <%= product.price %></td>
-                <td class="py-3 px-6 text-center">
-                    <button 
-                        type="button" 
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm edit-btn" 
-                        data-id="<%= product.id %>" 
-                        data-name="<%= product.name %>" 
-                        data-image="/uploads/<%= product.image %>" 
-                        data-category="<%= product.category %>" 
-                        data-price="<%= product.price %>"
-                    >
-                        Edit
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Dashboard Produk</h1>
+
+        <!-- Form Tambah Produk -->
+        <div class="bg-white shadow-md rounded-lg p-6 mb-10">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Tambah Produk</h2>
+            <form action="/dashboard/create" method="POST" enctype="multipart/form-data"
+                class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <input type="text" name="name" placeholder="Nama Produk"
+                    class="border border-gray-300 rounded-lg p-2 w-full" required />
+                <input type="file" name="image" accept="image/*" class="border border-gray-300 rounded-lg p-2 w-full"
+                    required />
+                <input type="text" name="category" placeholder="Kategori"
+                    class="border border-gray-300 rounded-lg p-2 w-full" required />
+                <input type="number" name="price" placeholder="Harga"
+                    class="border border-gray-300 rounded-lg p-2 w-full" required />
+                <div class="col-span-full text-right">
+                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg">
+                        Tambah
                     </button>
-                    <form 
-                        action="/dashboard/delete/<%= product.id %>" 
-                        method="POST" 
-                        class="inline-block"
-                    >
-                        <button 
-                            type="submit" 
-                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm"
-                        >
-                            Hapus
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            <% }) %>
-        </tbody>
-        
-    </table>
-</div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Daftar Produk</h2>
+            <table class="table-auto w-full border-collapse border border-gray-200">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">ID</th>
+                        <th class="py-3 px-6 text-left">Nama</th>
+                        <th class="py-3 px-6 text-left">Gambar</th>
+                        <th class="py-3 px-6 text-left">Kategori</th>
+                        <th class="py-3 px-6 text-left">Harga</th>
+                        <th class="py-3 px-6 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700 text-sm font-light">
+                    <% products.forEach(product=> { %>
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left">
+                                <%= product.id %>
+                            </td>
+                            <td class="py-3 px-6 text-left">
+                                <%= product.name %>
+                            </td>
+                            <td class="py-3 px-6 text-left">
+                                <img src="/uploads/<%= product.image %>" alt="<%= product.name %>"
+                                    class="h-16 w-16 object-cover rounded-lg" />
+                            </td>
+                            <td class="py-3 px-6 text-left">
+                                <%= product.category %>
+                            </td>
+                            <td class="py-3 px-6 text-left">Rp <%= product.price %>
+                            </td>
+                            <td class="py-3 px-6 text-center">
+                                <button type="button"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm edit-btn"
+                                    data-id="<%= product.id %>" data-name="<%= product.name %>"
+                                    data-image="/uploads/<%= product.image %>" data-category="<%= product.category %>"
+                                    data-price="<%= product.price %>">
+                                    Edit
+                                </button>
+                                <form action="/dashboard/delete/<%= product.id %>" method="POST" class="inline-block">
+                                    <button type="submit"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+
+            </table>
+        </div>
     </div>
-  </section>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         const editButtons = document.querySelectorAll('.edit-btn');
 
         editButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const productId = this.getAttribute('data-id');
                 const productName = this.getAttribute('data-name');
                 const productImage = this.getAttribute('data-image');
@@ -123,28 +94,29 @@
                 Swal.fire({
                     title: 'Edit Produk',
                     html: `
-                        <form id="editProductForm">
-                            <input type="text" name="name" value="${productName}" class="swal2-input" required placeholder="Nama Produk">
-                            <img src="${productImage}" alt="${productName}" class="mb-2" style="max-width: 100%; height: auto;">
-                            <input type="file" name="image" class="swal2-input" accept="image/*">
-                            <input type="text" name="category" value="${productCategory}" class="swal2-input" required placeholder="Kategori">
-                            <input type="number" name="price" value="${productPrice}" class="swal2-input" required placeholder="Harga">
-                        </form>
-                    `,
+                    <form id="editProductForm">
+                        <input type="text" name="name" value="${productName}" class="swal2-input" placeholder="Nama Produk">
+                        <img src="${productImage}" alt="${productName}" class="mb-2" style="max-width: 100%; height: auto;">
+                        <input type="file" name="image" class="swal2-input" accept="image/*">
+                        <input type="text" name="category" value="${productCategory}" class="swal2-input" placeholder="Kategori">
+                        <input type="number" name="price" value="${productPrice}" class="swal2-input" placeholder="Harga">
+                    </form>
+                `,
                     preConfirm: () => {
                         const formData = new FormData(document.getElementById('editProductForm'));
-                        formData.append('id', productId); // Include the product ID
+                        formData.append('id', productId); // Tambahkan ID produk
 
                         return fetch(`/dashboard/edit/${productId}`, {
                             method: 'POST',
                             body: formData
                         }).then(response => {
                             if (!response.ok) {
-                                throw new Error(response.statusText);
+                                return response.json().then(err => { throw new Error(err.message); });
                             }
                             return response.json();
                         });
                     },
+
                     focusConfirm: false,
                     showCancelButton: true,
                     confirmButtonText: 'Simpan',
@@ -152,10 +124,15 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire('Berhasil', 'Produk telah diperbarui.', 'success');
-                        location.reload(); // Reloads the page
+                        location.reload(); // Muat ulang halaman
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire('Dibatalkan', 'Edit produk dibatalkan.', 'info');
                     }
+                }).catch(error => {
+                    Swal.fire('Error', 'Gagal memperbarui produk: ' + error.message, 'error');
                 });
             });
         });
     });
+
 </script>

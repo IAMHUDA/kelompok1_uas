@@ -6,8 +6,15 @@ const Product = {
         const sql = 'INSERT INTO product (name, image, category, price) VALUES (?, ?, ?, ?)';
         return db.execute(sql, [name, image, category, price]);
     },
-    update: (id, product) => db.promise().query('UPDATE product SET name = ?, image = ?, category = ?, price = ? WHERE id = ?', [product.name, product.image, product.category, product.price, id]),
-    delete: (id) => db.promise().query('DELETE FROM product WHERE id = ?', [id])
+    update: async (id, product) => {
+        const sql = 'UPDATE product SET name = ?, image = ?, category = ?, price = ? WHERE id = ?';
+        return db.promise().query(sql, [name,image, category, price, id]);
+    },
+    delete: async (id) => {
+        const sql = 'DELETE FROM product WHERE id = ?';
+        return db.execute(sql,[id]);
+    }
+    
 };
 
 module.exports = Product;

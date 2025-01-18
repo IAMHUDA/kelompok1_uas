@@ -3,6 +3,8 @@ const router = express.Router();
 const Product = require('../models/product');
 const { isAuthenticated } = require('../middlewares/middleware');
 const multer = require('multer');
+const path = require('path');
+const db = require('../database/db')
 
 // Konfigurasi penyimpanan multer
 const storage = multer.diskStorage({
@@ -14,9 +16,25 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+// Fungsi untuk mendapatkan produk berdasarkan ID
+const getProductById = async (id) => {
+    const [rows] = await db.query('SELECT * FROM product WHERE id = ?', [id]);
+    return rows[0];
+};
 
-// Rute untuk menampilkan halaman dashboard dengan daftar produk
+
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (ext !== '.jpg' && ext !== '.jpeg' && ext !== '.png') {
+            return cb(new Error('Hanya file gambar yang diizinkan!'), false);
+        }
+        cb(null, true);
+    }
+});
+
+// Rute untuk menampilkan halaman dashboard
 router.get('/dashboard', isAuthenticated, async (req, res) => {
     try {
         const [products] = await Product.getAll();
@@ -24,7 +42,7 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
             layout: 'layouts/main-layout',
             page: 'dashboard',
             products,
-            user: req.session.user // Mengirimkan data pengguna
+            user: req.session.user // Data pengguna
         });
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -32,38 +50,24 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
     }
 });
 
-// Rute untuk menampilkan halaman login
-router.get('/login', (req, res) => {
-    res.render('login'); // Menampilkan halaman login
-});
-
 // Membuat produk baru
 router.post('/create', upload.single('image'), async (req, res) => {
     const { name, category, price } = req.body;
-    const image = req.file; // File yang diunggah
+    const image = req.file;
 
-    // Log untuk debug
-    console.log('Uploaded file:', image);
-    console.log('Request body:', req.body);
-
-    // Validasi input
     if (!name || !category || !price || !image) {
         return res.status(400).send('Semua field wajib diisi!');
     }
 
-    // Proses simpan ke database
-    const imagePath = image.filename; // Menyimpan nama file
     const productData = {
-        name: name || null,
-        category: category || null,
-        price: price ? parseFloat(price) : null, // Pastikan harga dalam format numerik
-        image: imagePath
+        name,
+        category,
+        price: parseFloat(price),
+        image: image.filename
     };
 
-    console.log('Creating product with:', productData);
-    
     try {
-        await Product.create(productData.name, productData.image, productData.category, productData.price);
+        await Product.create(productData);
         res.redirect('/dashboard');
     } catch (error) {
         console.error('Error while creating product:', error);
@@ -71,39 +75,51 @@ router.post('/create', upload.single('image'), async (req, res) => {
     }
 });
 
-// Mengupdate produk
+
+
 router.post('/edit/:id', upload.single('image'), async (req, res) => {
     const productId = req.params.id;
     const { name, category, price } = req.body;
-    const image = req.file; // File yang diunggah
+    const image = req.file; // File baru (jika ada)
 
-    // Log untuk debug
-    console.log('Uploaded file:', image);
-    console.log('Request body:', req.body);
-
-    // Validasi input
-    if (!name || !category || !price) {
-        return res.status(400).send('Semua field wajib diisi!');
-    }
-
-    // Menggunakan gambar yang ada jika tidak ada gambar baru
-    const productData = {
-        name: name || null,
-        category: category || null,
-        price: price ? parseFloat(price) : null,
-        image: image ? image.filename : undefined // Hanya menyimpan nama file jika ada
-    };
-
-    console.log('Updating product with:', productData);
-    
     try {
-        await Product.update(productId, productData);
-        res.redirect('/dashboard');
+        // Ambil produk berdasarkan ID
+        const product = await getProductById(productId);
+
+        if (!product) {
+            console.error('Produk tidak ditemukan');
+            return res.status(404).json({ message: 'Produk tidak ditemukan!' });
+        }
+
+        // Data untuk update
+        const productData = {
+            name: name || product.name,
+            category: category || product.category,
+            price: price !== undefined ? parseFloat(price) : product.price,
+            image: image ? image.filename : product.image,
+        };
+
+        // Hapus gambar lama jika gambar baru diunggah
+        if (image && product.image) {
+            const fs = require('fs');
+            const oldImagePath = `uploads/${product.image}`;
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath); // Hapus file lama
+            }
+        }
+
+        // Lakukan update
+        await db.query('UPDATE product SET name = ?, category = ?, price = ?, image = ? WHERE id = ?', 
+            [productData.name, productData.category, productData.price, productData.image, productId]);
+
+        res.status(200).json({ message: 'Produk berhasil diperbarui!' });
     } catch (error) {
         console.error('Error while updating product:', error);
-        res.status(500).send('Terjadi kesalahan saat mengupdate produk');
+        res.status(500).json({ message: 'Terjadi kesalahan saat mengupdate produk' });
     }
 });
+
+
 
 // Menghapus produk
 router.post('/delete/:id', async (req, res) => {

@@ -34,6 +34,7 @@ document.getElementById('payButton').addEventListener('click', function(event) {
                     console.error('Pembayaran gagal:', error);
                     alert('Terjadi kesalahan pada pembayaran.');
                 },
+
                 onClose: function() {
                     console.log('Popup pembayaran ditutup oleh pengguna.');
                 }
